@@ -1,5 +1,5 @@
 var createError = require('http-errors');
-const connectionString = mongodb+srv;//Seshasai:<password>@cluster0.6p7wy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority;
+//const connectionString = mongodb+srv;//Seshasai:<password>@cluster0.6p7wy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority;
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
