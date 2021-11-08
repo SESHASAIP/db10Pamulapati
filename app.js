@@ -4,7 +4,11 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const connectionString = process.env.MONGO_CON 
+mongoose = require('mongoose'); 
+mongoose.connect(connectionString,  
+{useNewUrlParser: true, 
+useUnifiedTopology: true});
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var volksRouter = require('./routes/volkswagen');
@@ -18,7 +22,7 @@ var Costume = require("./models/volkswagen");
 
 async function recreateDB(){ 
   // Delete everything 
-  await Volkswagen.deleteMany(); 
+  await Costume.deleteMany(); 
  
   let instance1 = new 
 Volkswagen({costume_type:"ghost",  size:'large', 
@@ -65,10 +69,6 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-const connectionString = process.env.MONGO_CON 
-mongoose = require('mongoose'); 
-mongoose.connect(connectionString,  
-{useNewUrlParser: true, 
-useUnifiedTopology: true});
+
 
   
