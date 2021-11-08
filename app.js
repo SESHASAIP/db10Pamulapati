@@ -12,6 +12,25 @@ var addmodsRouter = require('./routes/addmods');
 var slectorRouter = require('./routes/selector');
 
 var app = express();
+var Costume = require("./models/volkswagen");
+
+//server start 
+
+async function recreateDB(){ 
+  // Delete everything 
+  await Volkswagen.deleteMany(); 
+ 
+  let instance1 = new 
+Volkswagen({costume_type:"ghost",  size:'large', 
+cost:25.4}); 
+  instance1.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("First object saved") 
+  }); 
+} 
+ 
+let reseed = true; 
+if (reseed) { recreateDB();} 
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -46,3 +65,10 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+const connectionString = process.env.MONGO_CON 
+mongoose = require('mongoose'); 
+mongoose.connect(connectionString,  
+{useNewUrlParser: true, 
+useUnifiedTopology: true});
+
+  
