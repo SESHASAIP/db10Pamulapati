@@ -1,5 +1,5 @@
 var createError = require('http-errors');
-//const connectionString = mongodb+srv;//Seshasai:<password>@cluster0.6p7wy.mongodb.net/myFirstDatabase?retryWrites=true&w=majority;
+
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -14,27 +14,12 @@ var usersRouter = require('./routes/users');
 var volksRouter = require('./routes/volkswagen');
 var addmodsRouter = require('./routes/addmods');
 var slectorRouter = require('./routes/selector');
-
+var volkswagenRouter = require("./models/volkswagen");
 var app = express();
-var Costume = require("./models/volkswagen");
 
-//server start 
 
-async function recreateDB(){ 
-  // Delete everything 
-  await Costume.deleteMany(); 
- 
-  let instance1 = new 
-Volkswagen({costume_type:"ghost",  size:'large', 
-cost:25.4}); 
-  instance1.save( function(err,doc) { 
-      if(err) return console.error(err); 
-      console.log("First object saved") 
-  }); 
-} 
- 
-let reseed = true; 
-if (reseed) { recreateDB();} 
+
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -51,6 +36,44 @@ app.use('/users', usersRouter);
 app.use('/volkswagen', volksRouter);
 app.use('/addmods', addmodsRouter);
 app.use('/selector', slectorRouter);
+//Get the default connection 
+var db = mongoose.connection; 
+
+// We can seed the collection if needed on server start 
+async function recreateDB(){ 
+  // Delete everything 
+  await volkswagen.deleteMany(); 
+ 
+  let instance1 = new 
+Costume({cost:"4000",  varient:'passat', 
+user:'seshasai'}); 
+let instance2 = new 
+Costume({cost:"5000",  varient:'polo', 
+user:'seshasai'}); 
+let instance3 = new 
+Costume({cost:"1000",  varient:'chalenger', 
+user:'suribabu'}); 
+  instance1.save( function(err,doc) { 
+      if(err) return console.error(err); 
+      console.log("First object saved") 
+  }); 
+  instance1.save( function(err,doc) { 
+    if(err) return console.error(err); 
+    console.log("Second object saved") 
+}); 
+instance1.save( function(err,doc) { 
+  if(err) return console.error(err); 
+  console.log("Third object saved") 
+}); 
+} 
+ 
+let reseed = true; 
+if (reseed) { recreateDB();} 
+ 
+//Bind connection to error event  
+db.on('error', console.error.bind(console, 'MongoDB connection error:')); 
+db.once("open", function(){ 
+ console.log("Connection to DB succeeded")}); 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
