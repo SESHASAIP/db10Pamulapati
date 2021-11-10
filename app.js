@@ -14,7 +14,8 @@ var usersRouter = require('./routes/users');
 var volksRouter = require('./routes/volkswagen');
 var addmodsRouter = require('./routes/addmods');
 var slectorRouter = require('./routes/selector');
-var volkswagenRouter = require("./models/volkswagen");
+var volkswagen = require("./models/volkswagen");
+
 var app = express();
 
 
@@ -45,13 +46,13 @@ async function recreateDB(){
   await volkswagen.deleteMany(); 
  
   let instance1 = new 
-Costume({cost:"4000",  varient:'passat', 
+volkswagen({cost:"4000",  varient:'passat', 
 user:'seshasai'}); 
 let instance2 = new 
-Costume({cost:"5000",  varient:'polo', 
+volkswagen({cost:"5000",  varient:'polo', 
 user:'seshasai'}); 
 let instance3 = new 
-Costume({cost:"1000",  varient:'chalenger', 
+volkswagen({cost:"1000",  varient:'chalenger', 
 user:'suribabu'}); 
   instance1.save( function(err,doc) { 
       if(err) return console.error(err); 
