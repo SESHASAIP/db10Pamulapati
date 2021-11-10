@@ -37,8 +37,14 @@ app.use('/users', usersRouter);
 app.use('/volkswagen', volksRouter);
 app.use('/addmods', addmodsRouter);
 app.use('/selector', slectorRouter);
+
 //Get the default connection 
 var db = mongoose.connection; 
+ 
+//Bind connection to error event  
+db.on('error', console.error.bind(console, 'MongoDB connection error:')); 
+db.once("open", function(){ 
+ console.log("Connection to DB succeeded")}); 
 
 // We can seed the collection if needed on server start 
 async function recreateDB(){ 
@@ -71,10 +77,7 @@ instance1.save( function(err,doc) {
 let reseed = true; 
 if (reseed) { recreateDB();} 
  
-//Bind connection to error event  
-db.on('error', console.error.bind(console, 'MongoDB connection error:')); 
-db.once("open", function(){ 
- console.log("Connection to DB succeeded")}); 
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
