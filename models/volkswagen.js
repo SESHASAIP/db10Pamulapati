@@ -5,5 +5,5 @@ const costumeSchema = mongoose.Schema({
  user: String 
 }) 
  
-module.exports = mongoose.model("Costume", 
+module.exports = mongoose.model("apple", 
 costumeSchema) 
