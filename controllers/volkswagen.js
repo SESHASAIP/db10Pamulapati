@@ -24,3 +24,15 @@ exports.volkswagen_delete = function(req, res) {
 exports.volkswagen_update_put = function(req, res) { 
     res.send('NOT IMPLEMENTED: volkswagen update PUT' + req.params.id); 
 }; 
+
+// List of all Costumes 
+exports.volkswagen_list = async function(req, res) { 
+    try{ 
+        theCostumes = await volkswagen.find(); 
+        res.send(theCostumes); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
+}; 
