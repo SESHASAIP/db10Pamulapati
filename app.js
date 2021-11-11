@@ -15,6 +15,7 @@ var volksRouter = require('./routes/volkswagen');
 var addmodsRouter = require('./routes/addmods');
 var slectorRouter = require('./routes/selector');
 var volkswagen = require("./models/volkswagen");
+var resourceRouter = require('./routes/resource');
 
 var app = express();
 
@@ -37,6 +38,7 @@ app.use('/users', usersRouter);
 app.use('/volkswagen', volksRouter);
 app.use('/addmods', addmodsRouter);
 app.use('/selector', slectorRouter);
+app.use('/resource', resourceRouter);
 
 //Get the default connection 
 var db = mongoose.connection; 
