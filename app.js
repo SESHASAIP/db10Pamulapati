@@ -64,11 +64,11 @@ user:'suribabu'});
       if(err) return console.error(err); 
       console.log("First object saved") 
   }); 
-  instance1.save( function(err,doc) { 
+  instance2.save( function(err,doc) { 
     if(err) return console.error(err); 
     console.log("Second object saved") 
 }); 
-instance1.save( function(err,doc) { 
+instance3.save( function(err,doc) { 
   if(err) return console.error(err); 
   console.log("Third object saved") 
 }); 
