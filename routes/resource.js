@@ -20,7 +20,7 @@ router.delete('/volkswagen/:id', costume_controller.volkswagen_delete);
  
 // PUT request to update Costume. 
 router.put('/volkswagen/:id', 
-costume_controller.costume_update_put); 
+costume_controller.volkswagen_update_put); 
  
 // GET request for one Costume. 
 router.get('/volkswagen/:id', costume_controller.volkswagen_detail); 
