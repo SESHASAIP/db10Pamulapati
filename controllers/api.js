@@ -1,3 +1,5 @@
+const { resource } = require("../routes/resource");
+
 // API for our resources 
 exports.api = function(req, res) { 
     res.write('['); 
@@ -5,6 +7,6 @@ exports.api = function(req, res) {
     res.write('  "verbs":["GET","PUT", "DELETE"] '); 
     res.write('}'); 
     res.write(']') 
-    res.send(); 
+    res.send(resource); 
 }; 
  

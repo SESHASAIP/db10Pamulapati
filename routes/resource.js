@@ -8,7 +8,7 @@ var costume_controller = require('../controllers/volkswagen');
 /// API ROUTE /// 
  
 // GET resources base. 
-router.get('/volkswagen', api_controller.api); 
+router.get('/', api_controller.api); 
  
 /// COSTUME ROUTES /// 
  
