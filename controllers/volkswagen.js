@@ -49,7 +49,7 @@ exports.volkswagen_view_all_Page = async function(req, res) {
     }   
 }; 
 // Handle Costume create on POST. 
-exports.costume_create_post = async function(req, res) { 
+exports.volkswagen_create_post = async function(req, res) { 
     console.log(req.body) 
     let document = new volkswagen(); 
     // We are looking for a body, since POST does not have query parameters. 
