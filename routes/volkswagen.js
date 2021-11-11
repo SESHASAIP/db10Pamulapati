@@ -1,9 +1,7 @@
-var express = require('express');
-var router = express.Router();
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('volkswagen', { title: 'Search Results by volkswagen' });
-});
-
-module.exports = router;
+var express = require('express'); 
+const costume_controlers= require('../controllers/volkswagen'); 
+var router = express.Router(); 
+ 
+/* GET costumes */ 
+router.get('/', costume_controlers.volkswagen_view_all_Page ); 
+module.exports = router; 

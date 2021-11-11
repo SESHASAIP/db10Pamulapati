@@ -36,3 +36,15 @@ exports.volkswagen_list = async function(req, res) {
         res.send(`{"error": ${err}}`); 
     }   
 }; 
+// VIEWS 
+// Handle a show all view 
+exports.volkswagen_view_all_Page = async function(req, res) { 
+    try{ 
+        theCostumes = await volkswagen.find(); 
+        res.render('volkswagen', { title: 'volkswagen Search Results', results: theCostumes }); 
+    } 
+    catch(err){ 
+        res.status(500); 
+        res.send(`{"error": ${err}}`); 
+    }   
+}; 
