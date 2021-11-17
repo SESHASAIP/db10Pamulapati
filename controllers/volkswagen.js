@@ -26,31 +26,43 @@ exports.volkswagen_create_post = function(req, res) {
 }; 
  
 // Handle Costume delete form on DELETE. 
-exports.volkswagen_delete = function(req, res) { 
-    res.send('NOT IMPLEMENTED: volkswagen delete DELETE ' + req.params.id); 
+//exports.volkswagen_delete = function(req, res) { 
+  // res.send('NOT IMPLEMENTED: volkswagen delete DELETE ' + req.params.id); 
+//}; 
+// Handle Costume delete on DELETE. 
+exports.volkswagen_delete = async function(req, res) { 
+    console.log("delete "  + req.params.id) 
+    try { 
+        result = await volkswagen.findByIdAndDelete( req.params.id) 
+        console.log("Removed " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": Error deleting ${err}}`); 
+    } 
 }; 
  
 // Handle Costume update form on PUT. 
-exports.volkswagen_update_put =async function(req, res) { 
+
+exports.volkswagen_update_put = async function(req, res) { 
     console.log(`update on id ${req.params.id} with body 
-    ${JSON.stringify(req.body)}`) 
-        try { 
-            let toUpdate = await Costume.findById( req.params.id) 
-            // Do updates of properties 
-            if(req.body.costume_type)  
-                   toUpdate.cost = req.body.cost; 
-            if(req.body.cost) toUpdate.cost = req.body.cost; 
-            if(req.body.size) toUpdate.size = req.body.size; 
-            let result = await toUpdate.save(); 
-            console.log("Sucess " + result) 
-            res.send(result) 
-        } catch (err) { 
-            res.status(500) 
-            res.send(`{"error": ${err}: Update for id ${req.params.id} 
-    failed`); 
-        } 
-    
-   // res.send('NOT IMPLEMENTED: volkswagen update PUT' + req.params.id); 
+${JSON.stringify(req.body)}`) 
+    try { 
+        let toUpdate = await volkswagen.findById( req.params.id) 
+        // Do updates of properties 
+        if(req.body.cost)  
+               toUpdate.cost = req.body.cost; 
+        if(req.body.varient)
+               toUpdate.varient = req.body.varient; 
+        if(req.body.user) 
+               toUpdate.user = req.body.user; 
+        let result = await toUpdate.save(); 
+        console.log("Sucess " + result) 
+        res.send(result) 
+    } catch (err) { 
+        res.status(500) 
+        res.send(`{"error": ${err}: Update for id ${req.params.id} failed`); 
+    } 
 }; 
 
 // List of all Costumes 
@@ -95,5 +107,18 @@ exports.volkswagen_create_post = async function(req, res) {
         res.status(500); 
         res.send(`{"error": ${err}}`); 
     }   
+}; 
+// Handle a show one view with id specified by query 
+exports.volkswagen_view_one_Page = async function(req, res) { 
+    console.log("single view for id "  + req.query.id) 
+    try{ 
+        result = await volkswagen.findById( req.query.id) 
+        res.render('costumedetail',  
+        { title: 'Costume Detail', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
 }; 
  
