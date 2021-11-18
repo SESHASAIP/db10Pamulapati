@@ -1,0 +1,22 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let volkswagenid = toShow._id 
+  - let volkswagen_varient = toShow.varient 
+  - let volkswagencost = toShow.cost 
+  - let volkswagensize = toShow.size 
+  div 
+    div.row 
+      div(class='volkswagenAttr mr-3') volkswagen  ID is: 
+      div #{volkswagenid} 
+    div.row 
+      div(class='volkswagenAttr mr-3') volkswagen varient is: 
+      div #{volkswagen_varient} 
+    div.row 
+      div(class='volkswagenAttr mr-3') volkswagen Size is: 
+      div #{volkswagensize} 
+    div.row 
+      div(class='volkswagenAttr mr-3') volkswagen volkswagencost is: 
+      div #{volkswagencost} 
