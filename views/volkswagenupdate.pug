@@ -1,0 +1,43 @@
+extends layout 
+ 
+block content 
+  h1= title 
+ 
+  - let volkswagenid = toShow._id 
+  - let volkswagenvarient = toShow.varient
+  - let volkswagencost = toShow.cost 
+  - let volkswagenuser = toShow.user
+   
+  div.row(class='mb-2') 
+    div.mr-1 ID is 
+    div #{volkswagenid} 
+  - let actionid = "/resource/volkswagen/" + volkswagenid 
+  form(id='volkswagenForm', action= actionid, method="PUT") 
+    div.form-group 
+        label.volkswagenAttr(for='varient') volkswagen type 
+        input#varient(type='text', name='varient', value= varient ) 
+    div.form-group 
+        label.volkswagenAttr(for='user') volkswagen volkswagenusers 
+        input#user(type='text', name='user', value= user ) 
+    div.form-group 
+        label.volkswagenAttr(for='cost') volkswagen cost 
+        input#cost(type='number', name='cost', value= cost ) 
+    input(type="submit") 
+ 
+  script. 
+    document.forms['volkswagenForm'].addEventListener('submit', (event) => { 
+      event.preventDefault(); 
+      // TODO do something here to show user that form is being submitted 
+      fetch(event.target.action, { 
+        method: 'PUT', 
+        body: new URLSearchParams(new FormData(event.target)) // event.target is the form 
+      }).then((resp) => { 
+        return resp.json(); // or resp.text() or whatever the server sends 
+      }).then((body) => { 
+        alert("Update succeded") 
+        // TODO handle body 
+      }).catch((error) => { 
+        // TODO handle error 
+        alert("Update failed " + error ) 
+      }); 
+    }); 

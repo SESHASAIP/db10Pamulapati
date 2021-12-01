@@ -1,13 +1,13 @@
 var volkswagen = require('../models/volkswagen'); 
  
-// List of all Costumes 
+// List of all volkswagens 
 exports.volkswagen_list = function(req, res) { 
     res.send('NOT IMPLEMENTED: volkswagen list'); 
 }; 
  
-// for a specific Costume. 
+// for a specific volkswagen. 
 exports.volkswagen_detail = async function(req, res) { 
-    //exports.costume_detail = async function(req, res) { 
+    //exports.volkswagen_detail = async function(req, res) { 
         console.log("detail"  + req.params.id) 
         try{
             result = await volkswagen.findById( req.params.id) 
@@ -20,16 +20,16 @@ exports.volkswagen_detail = async function(req, res) {
    // res.send('NOT IMPLEMENTED: volkswagen detail: ' + req.params.id); 
 }; 
  
-// Handle Costume create on POST. 
+// Handle volkswagen create on POST. 
 exports.volkswagen_create_post = function(req, res) { 
     res.send('NOT IMPLEMENTED: volkswagen create POST'); 
 }; 
  
-// Handle Costume delete form on DELETE. 
+// Handle volkswagen delete form on DELETE. 
 //exports.volkswagen_delete = function(req, res) { 
   // res.send('NOT IMPLEMENTED: volkswagen delete DELETE ' + req.params.id); 
 //}; 
-// Handle Costume delete on DELETE. 
+// Handle volkswagen delete on DELETE. 
 exports.volkswagen_delete = async function(req, res) { 
     console.log("delete "  + req.params.id) 
     try { 
@@ -42,7 +42,7 @@ exports.volkswagen_delete = async function(req, res) {
     } 
 }; 
  
-// Handle Costume update form on PUT. 
+// Handle volkswagen update form on PUT. 
 
 exports.volkswagen_update_put = async function(req, res) { 
     console.log(`update on id ${req.params.id} with body 
@@ -65,11 +65,11 @@ ${JSON.stringify(req.body)}`)
     } 
 }; 
 
-// List of all Costumes 
+// List of all volkswagens 
 exports.volkswagen_list = async function(req, res) { 
     try{ 
-        theCostumes = await volkswagen.find(); 
-        res.send(theCostumes); 
+        thevolkswagens = await volkswagen.find(); 
+        res.send(thevolkswagens); 
     } 
     catch(err){ 
         res.status(500); 
@@ -80,22 +80,22 @@ exports.volkswagen_list = async function(req, res) {
 // Handle a show all view 
 exports.volkswagen_view_all_Page = async function(req, res) { 
     try{ 
-        theCostumes = await volkswagen.find(); 
-        res.render('volkswagen', { title: 'volkswagen Search Results', results: theCostumes }); 
+        thevolkswagens = await volkswagen.find(); 
+        res.render('volkswagen', { title: 'volkswagen Search Results', results: thevolkswagens }); 
     } 
     catch(err){ 
         res.status(500); 
         res.send(`{"error": ${err}}`); 
     }   
 }; 
-// Handle Costume create on POST. 
+// Handle volkswagen create on POST. 
 exports.volkswagen_create_post = async function(req, res) { 
     console.log(req.body) 
     let document = new volkswagen(); 
     // We are looking for a body, since POST does not have query parameters. 
     // Even though bodies can be in many different formats, we will be picky 
     // and require that it be a json object 
-    // {"costume_type":"goat", "cost":12, "size":"large"} 
+    // {"volkswagen_type":"goat", "cost":12, "size":"large"} 
     document.cost = req.body.cost; 
     document.varient = req.body.varient; 
     document.user = req.body.user; 
@@ -113,12 +113,69 @@ exports.volkswagen_view_one_Page = async function(req, res) {
     console.log("single view for id "  + req.query.id) 
     try{ 
         result = await volkswagen.findById( req.query.id) 
-        res.render('costumedetail',  
-        { title: 'Costume Detail', toShow: result }); 
+        res.render('volkswagendetail',  
+        { title: 'volkswagen Detail', toShow: result }); 
     } 
     catch(err){ 
         res.status(500) 
         res.send(`{'error': '${err}'}`); 
     } 
 }; 
- 
+// Handle building the view for creating a volkswagen.
+// No body, no in path parameter, no query.
+// Does not need to be async
+
+
+// Handle building the view for updating a volkswagen. 
+// query provides the id 
+exports.volkswagen_update_Page =  async function(req, res) { 
+    console.log("update view for item "+req.query.id) 
+    try{ 
+        let result = await volkswagen.findById(req.query.id) 
+        res.render('volkswagenupdate', { title: 'volkswagen Update', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
+// Handle building the view for creating a volkswagen. 
+// No body, no in path parameter, no query. 
+// Does not need to be async 
+exports.volkswagen_create_Page =  function(req, res) { 
+    console.log("create view") 
+    try{ 
+        res.render('volkswagencreate', { title: 'volkswagen Create'}); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
+//Handle building the view for updating a volkswagen. 
+// query provides the id 
+exports.volkswagen_update_Page =  async function(req, res) { 
+    console.log("update view for item "+req.query.id) 
+    try{ 
+        let result = await volkswagen.findById(req.query.id) 
+        res.render('volkswagenupdate', { title: 'volkswagen Update', toShow: result }); 
+    } 
+    catch(err){ 
+        res.status(500) 
+        res.send(`{'error': '${err}'}`); 
+    } 
+}; 
+
+// Handle a delete one view with id from query
+exports.volkswagen_delete_Page = async function(req, res) {
+    console.log("Delete view for id " + req.query.id)
+    try{
+    result = await volkswagen.findById(req.query.id)
+    res.render('volkswagendelete', { title: 'volkswagen Delete', toShow:
+    result });
+    }
+    catch(err){
+    res.status(500)
+    res.send(`{'error': '${err}'}`);
+    }
+    };

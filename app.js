@@ -4,6 +4,25 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var passport = require('passport'); 
+var LocalStrategy = require('passport-local').Strategy; 
+//var volkswagen=require("./models/volkswagen");
+passport.use(new LocalStrategy( 
+ function(username, password, done) { 
+    Account.findOne({ username: username }, function (err, user) { 
+      if (err) { return done(err); } 
+      if (!user) { 
+        return done(null, false, { message: 'Incorrect username.' }); 
+      } 
+      if (!user.validPassword(password)) { 
+        return done(null, false, { message: 'Incorrect password.' }); 
+      } 
+      return done(null, user); 
+    }) 
+  }));
+
+
+  
 const connectionString = process.env.MONGO_CON 
 mongoose = require('mongoose'); 
 mongoose.connect(connectionString,  
@@ -16,6 +35,7 @@ var addmodsRouter = require('./routes/addmods');
 var slectorRouter = require('./routes/selector');
 var volkswagen = require("./models/volkswagen");
 var resourceRouter = require('./routes/resource');
+
 
 var app = express();
 
@@ -32,6 +52,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(require('express-session')({ 
+  secret: 'keyboard cat', 
+  resave: false, 
+  saveUninitialized: false 
+})); 
+app.use(passport.initialize()); 
+app.use(passport.session()); 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -54,13 +81,13 @@ async function recreateDB(){
   await volkswagen.deleteMany(); 
  
   let instance1 = new 
-volkswagen({cost:"4000",  varient:'passat', 
+volkswagen({cost:4000,  varient:'passat', 
 user:'seshasai'}); 
 let instance2 = new 
-volkswagen({cost:"5000",  varient:'polo', 
+volkswagen({cost:5000,  varient:'polo', 
 user:'seshasai'}); 
 let instance3 = new 
-volkswagen({cost:"1000",  varient:'chalenger', 
+volkswagen({cost:1000,  varient:'chalenger', 
 user:'suribabu'}); 
   instance1.save( function(err,doc) { 
       if(err) return console.error(err); 
@@ -78,13 +105,22 @@ instance3.save( function(err,doc) {
  
 let reseed = true; 
 if (reseed) { recreateDB();} 
- 
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
+ 
+// passport config 
+// Use the existing connection 
+// The Account model  
+var Account =require('./models/account'); 
+ 
+passport.use(new LocalStrategy(Account.authenticate())); 
+passport.serializeUser(Account.serializeUser()); 
+passport.deserializeUser(Account.deserializeUser()); 
+ 
+
+
 
 // error handler
 app.use(function(err, req, res, next) {
